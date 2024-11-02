@@ -17,7 +17,6 @@ RUN apt-get update && apt-get install -y  \
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-
 RUN docker-php-ext-install pgsql pdo pdo_pgsql pcntl
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

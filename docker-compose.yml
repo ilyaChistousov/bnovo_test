@@ -4,7 +4,7 @@ services:
     postgres:
         image: postgres:16-alpine
         restart: unless-stopped
-        container_name: team-seeker-db
+        container_name: postgres
         tty: true
         ports:
             - "5432:5432"
@@ -14,14 +14,12 @@ services:
             POSTGRES_PASSWORD: ${DB_PASSWORD}
         volumes:
             - ./storage/docker/_db:/var/lib/postgresql/data
-        networks:
-            - team-seeker-db
 
     app:
         build:
             context: ./
             dockerfile: docker/php/Dockerfile
-        container_name: team-seeker-app
+        container_name: app
         restart: unless-stopped
         tty: true
         working_dir: /var/www
@@ -29,13 +27,10 @@ services:
             - ./:/var/www
         depends_on:
             - postgres
-        networks:
-            - team-seeker-db
-            - team-seeker-webserver
 
     nginx:
         image: nginx:stable-alpine
-        container_name: team-seeker-webserver
+        container_name: nginx
         restart: unless-stopped
         tty: true
         ports:
@@ -44,9 +39,3 @@ services:
             - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
             - ./storage/docker/logs/nginx:/var/log/nginx/
             - ./:/var/www
-        networks:
-            - team-seeker-webserver
-
-networks:
-    team-seeker-db:
-    team-seeker-webserver:
