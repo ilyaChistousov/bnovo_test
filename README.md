@@ -5,8 +5,22 @@
 
 ### Installation
 
+Copy .env
 ```
-docker-compose up -d
+cp .env.example .env
+```
+Update db connection settings in .env
+```
+DB_CONNECTION=pgsql
+DB_HOST=postgres
+DB_PORT=5432
+DB_DATABASE=laravel
+DB_USERNAME=root1
+DB_PASSWORD=root1
+```
+Init docker
+```
+make init
 ```
 
 ### API
